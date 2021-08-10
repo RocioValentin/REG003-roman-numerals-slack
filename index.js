@@ -1,9 +1,13 @@
 const express = require('express');
 const app = express();
 const routes = require('./routes');
+//const cors = require('cors');
+const config = require('./config');
+//const pkg = require('./package.json');
 
+const { port } = config;
 app.use(express.json());
-app.set('port', process.env.PORT || 3000);
+app.set('port', port);
 
 app.use(require('./routes/index'))
 /*app.get('/',(req,res) => {
