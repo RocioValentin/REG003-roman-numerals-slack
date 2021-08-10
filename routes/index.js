@@ -14,7 +14,7 @@ router.get('/',(req, res) => {
     })
 });
 
-router.post('/',(req, res, next) => {
+router.post('/', async (req, res, next) => {
    try{
     const { application } = req.headers;
     //console.log('headers', application )
@@ -26,9 +26,9 @@ router.post('/',(req, res, next) => {
     //console.log('json slack', typeof(name), typeof(param));
     let text_respond;
     if ( name === 'parse' ) {
-        text_respond = npm.parse(param)
+        text_respond = await npm.parse(param)
     } else if ( name === 'stringify') {
-        text_respond = npm.stringify(Number(param))
+        text_respond = await npm.stringify(Number(param))
     } else {
         text_respond = 'error'
     }
