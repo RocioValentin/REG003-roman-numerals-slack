@@ -14,7 +14,8 @@ router.get('/',(req, res) => {
     })
 });
 
-router.post('/',(req, res) => {
+router.post('/',(req, res, next) => {
+   try{
     const { application } = req.headers;
     //console.log('headers', application )
     const slack = qs.parse(application);
@@ -33,10 +34,13 @@ router.post('/',(req, res) => {
     }
     //const text = npm.parse('I');
     //console.log('aaaa', text);
-    res.json({
+    return res.json({
         "response_type": slack.channel_name,
         "text": text_respond
       })
+   } catch (err) {
+       return next(404)
+   }
 });
 
 module.exports = router
