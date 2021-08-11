@@ -9,7 +9,7 @@ const { port } = config;
 app.use(express.json());
 app.set('port', port);
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(require('./routes/index'))
 /*app.get('/',(req,res) => {
   res.json('hello world')
