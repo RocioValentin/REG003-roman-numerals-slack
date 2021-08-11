@@ -14,11 +14,22 @@ router.get('/',(req, res) => {
     })
 });
 
-router.post('/', async (req, res, next) => {
-   try{
-    const { application } = req.headers;
+router.post('/', (req, res) => {
+  const { text } = req.body;
+  console.log(text)
+  const [ name, param ] = text.split('+');
+  console.log(name, param)
+  
+  if ( name === 'parse' ) {
+      text_respond = npm.parse(param)
+    } else if ( name === 'stringify') {
+        text_respond = npm.stringify(Number(param))
+    } else {
+        text_respond = 'error'
+    }
+    /* const { application } = req.headers;
     //console.log('headers', application )
-    const slack = qs.parse(application);
+    const slack = qs.parse(text);
     //console.log(slack)
     const text_slack = slack.text
     //console.log(text_slack)
@@ -26,9 +37,9 @@ router.post('/', async (req, res, next) => {
     //console.log('json slack', typeof(name), typeof(param));
     let text_respond;
     if ( name === 'parse' ) {
-        text_respond = await npm.parse(param)
+        text_respond = npm.parse(param)
     } else if ( name === 'stringify') {
-        text_respond = await npm.stringify(Number(param))
+        text_respond = npm.stringify(Number(param))
     } else {
         text_respond = 'error'
     }
@@ -37,10 +48,11 @@ router.post('/', async (req, res, next) => {
     return res.json({
         "response_type": slack.channel_name,
         "text": text_respond
+      }) */
+      res.json({
+        "response_type": 'in channel',
+        "text": text_respond
       })
-   } catch (err) {
-       return next(404)
-   }
 });
 
 module.exports = router
@@ -50,4 +62,5 @@ module.exports = router
         res.send('hello world')
     })
     nextMain();
-} */
+} 
+// https://rv-roman-numerals.herokuapp.com/ */
