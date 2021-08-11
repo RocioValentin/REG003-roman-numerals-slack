@@ -7,25 +7,40 @@ const npm = require('rocio-valentin-roman-numerals')
 
 //console.log('guasgusgd', Object.keys(npm));
 
-router.get('/',(req, res) => {
+router.get('/',async (req, res) => {
     res.json({
         'name': pjson.name,
         'version': pjson.version
     })
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const { text } = req.body;
   console.log(text)
   const [ name, param ] = text.split('+');
   console.log(name, param)
+
+  let text_respond = "";
   
   if ( name === 'parse' ) {
-      text_respond = npm.parse(param)
+      try {
+          text_respond = npm.parse(param)
+        } catch(err) {
+            text_respond = err.message
+        }
+     
     } else if ( name === 'stringify') {
-        text_respond = npm.stringify(Number(param))
+        try {
+            text_respond = npm.stringify(Number(param))
+        } catch (err) {
+            text_respond = err.message
+        }
     } else {
-        text_respond = 'error'
+        try {
+            text_respond = 'error';
+        } catch (err) {
+            text_respond = err.message
+        }
     }
     /* const { application } = req.headers;
     //console.log('headers', application )
@@ -58,6 +73,7 @@ router.post('/', (req, res) => {
 module.exports = router
 
 /* module.exports = (app, nextMain) => {
+    
     app.get('/',(req,res) => {
         res.send('hello world')
     })
