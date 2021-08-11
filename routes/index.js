@@ -2,10 +2,12 @@ const { Router } = require('express');
 const router = Router();
 const qs = require('querystring')
 const pjson = require('../package.json');
-const npm = require('rocio-valentin-roman-numerals')
+const { parse, stringify} = require('rocio-valentin-roman-numerals')
 
 
 //console.log('guasgusgd', Object.keys(npm));
+
+console.log(parse('I'));
 
 router.get('/',async (req, res) => {
     res.json({
@@ -18,26 +20,26 @@ router.post('/', async (req, res) => {
   const { text } = req.body;
   console.log(text)
   const [ name, param ] = text.split('+');
-  console.log(name, param)
+  console.log(name, typeof(param))
 
   let text_respond = "";
   
   if ( name === 'parse' ) {
       try {
-          text_respond = npm.parse(param)
+          text_respond = await parse(param)
         } catch(err) {
             text_respond = err.message
         }
      
     } else if ( name === 'stringify') {
         try {
-            text_respond = npm.stringify(Number(param))
+            text_respond = await stringify(Number(param))
         } catch (err) {
             text_respond = err.message
         }
     } else {
         try {
-            text_respond = 'error';
+            text_respond = await 'error';
         } catch (err) {
             text_respond = err.message
         }
