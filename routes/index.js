@@ -26,20 +26,20 @@ router.post('/', async (req, res) => {
   
   if ( name === 'parse' ) {
       try {
-          text_respond = await parse(param)
+          text_respond = parse(param)
         } catch(err) {
             text_respond = err.message
         }
      
     } else if ( name === 'stringify') {
         try {
-            text_respond = await stringify(Number(param))
+            text_respond = stringify(Number(param))
         } catch (err) {
             text_respond = err.message
         }
     } else {
         try {
-            text_respond = await 'error';
+            text_respond = 'error';
         } catch (err) {
             text_respond = err.message
         }
