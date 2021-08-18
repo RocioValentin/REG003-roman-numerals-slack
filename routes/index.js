@@ -1,16 +1,12 @@
 const { Router } = require('express');
 const router = Router();
 //const qs = require('querystring')
+const { getInfo } = require('./controller')
 const pjson = require('../package.json');
 const { parse, stringify} = require('rocio-valentin-roman-numerals')
 
 
-router.get('/', (req, res) => {
-    res.json({
-        'name': pjson.name,
-        'version': pjson.version
-    })
-});
+router.get('/', getInfo );
 
 router.post('/',  (req, res) => {
   const { text } = req.body;
@@ -35,6 +31,21 @@ router.post('/',  (req, res) => {
     } else {
         try {
             text_respond = 'error';
+        } catch (err) {
+            text_respond = err.message
+        }
+    }
+
+    if (text === 'help'){
+        try {
+            text_respond = 'Convert form roman to arabic: /parse 3 || Convert form arabic to roman: /stringify V '
+        } catch (err) {
+            text_respond = err.message
+        }
+    }
+    if (text === 'version'){
+        try {
+            text_respond = pjson.version;
         } catch (err) {
             text_respond = err.message
         }
